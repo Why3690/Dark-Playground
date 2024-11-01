@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Weeks Reminder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .result, .reminder {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+        }
+        .reminder {
+            color: #FF8C00;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Life Weeks Reminder</h1>
+    
+    <!-- 输入日期 -->
+    <label for="birth_date">Enter your birth date (YYYY-MM-DD):</label>
+    <input type="date" id="birth_date">
+    
+    <br><br>
+
+    <!-- 选择语言 -->
+    <label for="language">Language:</label>
+    <select id="language">
+        <option value="en">English</option>
+        <option value="cn">中文</option>
+    </select>
+
+    <br><br>
+
+    <!-- 提交按钮 -->
+    <button onclick="calculateWeeks()">Submit</button>
+    
+    <!-- 显示结果的区域 -->
+    <div class="result" id="result"></div>
+
+    <!-- 激励短语显示区域 -->
+    <div class="reminder" id="reminder"></div>
+
+    <script>
+        // 激励短语
+        const reminders = {
+            en: [
+                "Life is short, don’t let procrastination be your default mode.",
+                "Every week is precious, don't waste time procrastinating!",
+                "Every decision you make today shapes the future you.",
+                "You can choose to procrastinate or act now and make a change.",
+                "What you do today determines your freedom tomorrow.",
+            ],
+            cn: [
+                "人生短暂，不要让拖延成为你的常态。",
+                "每一周都是宝贵的，不要浪费时间拖延！",
+                "现在的每一个决定，决定了未来的你。",
+                "你可以选择拖延，也可以选择现在行动，做出改变。",
+                "今天做的事，决定你明天的自由。",
+            ]
+        };
+
+        // 计算已度过的周数并显示结果
+        function calculateWeeks() {
+            const birthDateInput = document.getElementById('birth_date').value;
+            const language = document.getElementById('language').value;
+
+            if (!birthDateInput) {
+                alert("Please enter a valid birth date.");
+                return;
+            }
+
+            const birthDate = new Date(birthDateInput);
+            const today = new Date();
+            const weeksLived = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24 * 7));
+            const totalWeeks = 88 * 52; // 假设寿命为88年
+            const weeksRemaining = totalWeeks - weeksLived;
+
+            // 生成随机激励短语
+            const reminderText = reminders[language][Math.floor(Math.random() * reminders[language].length)];
+
+            // 显示结果和激励短语
+            const resultText = language === "en" 
+                ? `You have lived ${weeksLived} weeks, approximately ${weeksRemaining} weeks remaining.` 
+                : `你已经度过了 ${weeksLived} 周，剩余大约 ${weeksRemaining} 周。`;
+
+            document.getElementById('result').innerText = resultText;
+            document.getElementById('reminder').innerText = reminderText;
+        }
+    </script>
+</body>
+</html>
